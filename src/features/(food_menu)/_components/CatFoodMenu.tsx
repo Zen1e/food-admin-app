@@ -3,6 +3,21 @@ import { useEffect, useState } from "react";
 import { Image, Pencil } from "lucide-react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ToastContainer, toast } from 'react-toastify';
+import {Types} from "mongoose"
+
+
+type FoodItem = {
+  _id?: Types.ObjectId;
+  foodName?: string;
+  price?: number;
+  category?: string;
+  ingredients?: string;
+  image?: string;
+}
+
+type FormikError = {
+  foodName?: string
+}
 
 export default function CatFoodMenu(props) {
   const { category, catList } = props;
@@ -14,8 +29,8 @@ export default function CatFoodMenu(props) {
   const [ingreds, setIngreds] = useState("");
   const [picFile, setPicFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [editing, setEditing] = useState({});
-  const [preview, setPreview] = useState("");
+  const [editing, setEditing] = useState<FoodItem>({});
+  const [preview, setPreview] = useState<File>();
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -220,14 +235,14 @@ export default function CatFoodMenu(props) {
             </div>
             <Formik
               initialValues={{
-                foodName: editing.foodName,
-                price: editing.price,
-                category: editing.category,
-                ingredients: editing.ingredients,
-                image: editing.image,
+                foodName: editing.foodName ,
+                price: editing.price ,
+                category: editing.category ,
+                ingredients: editing.ingredients ,
+                image: editing.image ,
               }}
               validate={(values) => {
-                const errors = {};
+                const errors:FormikError = {};
                 if (!values.foodName) {
                   errors.foodName = "Required";
                 }

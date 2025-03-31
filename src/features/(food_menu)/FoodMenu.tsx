@@ -3,7 +3,7 @@ import axios from "axios";
 import CatFoodMenu from "./_components/CatFoodMenu";
 
 export default function FoodMenu() {
-  const [catList, setCatList] = useState();
+  const [catList, setCatList] = useState([]);
   const [addCat, setAddCat] = useState(false);
   const [newCat, setNewCat] = useState("");
 
