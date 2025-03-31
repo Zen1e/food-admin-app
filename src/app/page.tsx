@@ -12,7 +12,9 @@ export default function Home() {
   const router = useRouter();
   
   const [pageStatus, setPageStatus] = useState(1);
-  const [currUser, setCurrUser] = useState({});
+  const [currUser, setCurrUser] = useState({
+    name: ""
+  });
 
   useEffect(() => {
     !window.localStorage.authToken ? router.push("/login") : setCurrUser(jwt.decode(window.localStorage.authToken))
