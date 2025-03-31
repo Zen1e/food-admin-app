@@ -33,8 +33,12 @@ export default function FoodMenu() {
 
   const createCategory = async () => {
     try {
-      await axios.post("http://localhost:3001/cat/", { catName: newCat });
+      const response = await axios.post("http://localhost:3001/cat/", { catName: newCat },
+        { headers: { Authorization: `Bearer ${window.localStorage.authToken}` } });
       setAddCat(false);
+      setCatList([...catList,{catName: newCat}]);
+      console.log(response);
+      
     } catch (err) {
       console.log(err);
     }
@@ -43,7 +47,7 @@ export default function FoodMenu() {
   return (
     <div className="w-[calc(100vw-205px)] bg-gray-100">
       {addCat && (
-        <div className="w-full h-full ml-[-205px] fixed bg-black/25 flex justify-center items-center">
+        <div className="w-full h-full ml-[-205px] fixed bg-black/25 flex justify-center items-center z-10">
           <div className="w-[500px] h-[300px] rounded-[5px] bg-white p-[25px]">
             <div className="w-full h-[50px] flex justify-between">
               <div className="text-[20px] font-bold">Add new category</div>
@@ -73,13 +77,8 @@ export default function FoodMenu() {
           </div>
         </div>
       )}
-      <div className="w-full h-[60px] flex">
-        <img
-          src="./profile.jpg"
-          className="rounded-full absolute w-[50px] mt-[10px] right-[30px]"
-        />
-      </div>
-
+      <div className="w-full h-[60px] flex"></div>
+      
       <div className="p-[24px] rounded-[12px] bg-white m-[30px] flex flex-col gap-[20px]">
         <div className="font-bold text-[25px]">Dishes category</div>
         <div className="flex gap-[15px] flex-wrap">
@@ -106,7 +105,7 @@ export default function FoodMenu() {
 
       {catList?.map((element, index) => (
         <div key={index}>
-          <CatFoodMenu category={element.catName} />
+          <CatFoodMenu category={element.catName} catList={catList}/>
         </div>
       ))}
     </div>
