@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Image, Pencil } from "lucide-react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ToastContainer, toast } from 'react-toastify';
-import {Types} from "mongoose"
-
+import { ToastContainer, toast } from "react-toastify";
+import { Types } from "mongoose";
+import { useRouter } from "next/navigation";
 
 type FoodItem = {
   _id?: Types.ObjectId;
@@ -13,11 +13,11 @@ type FoodItem = {
   category?: string;
   ingredients?: string;
   image?: string;
-}
+};
 
 type FormikError = {
-  foodName?: string
-}
+  foodName?: string;
+};
 
 export default function CatFoodMenu(props) {
   const { category, catList } = props;
@@ -32,14 +32,17 @@ export default function CatFoodMenu(props) {
   const [editing, setEditing] = useState<FoodItem>({});
   const [preview, setPreview] = useState<File>();
 
+  const router = useRouter();
+
   useEffect(() => {
     const fetchFoods = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/food/${category}`,
-          { headers: { Authorization: `Bearer ${window.localStorage.authToken}` } });
+        const res = await axios.get(`https://food-service-app-ciba.onrender.com/food/${category}`, {
+          headers: { Authorization: `Bearer ${window.localStorage.authToken}` },
+        });
         setFoods(res.data.foods);
       } catch (err) {
-        console.log(err);
+        err.status === 403 ? router.push("login") : console.log(err);
       }
     };
     fetchFoods();
@@ -80,17 +83,26 @@ export default function CatFoodMenu(props) {
         formData
       );
       try {
-        await axios.post("http://localhost:3001/food/", {
-          foodName: foodName,
-          category: category,
-          ingredients: ingreds,
-          price: foodPrice,
-          image: response.data.secure_url,
-        },
-        { headers: { Authorization: `Bearer ${window.localStorage.authToken}` } });
+        await axios.post(
+          "https://food-service-app-ciba.onrender.com/food/",
+          {
+            foodName: foodName,
+            category: category,
+            ingredients: ingreds,
+            price: foodPrice,
+            image: response.data.secure_url,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.authToken}`,
+            },
+          }
+        );
         window.location.reload();
       } catch (err) {
-        console.log("Could not send data", err);
+        err.status === 403
+          ? router.push("login")
+          : console.log("Could not send data", err);
       }
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -123,8 +135,8 @@ export default function CatFoodMenu(props) {
   const deleteDish = async (id) => {
     console.log(id);
     try {
-      await axios.delete("http://localhost:3001/food/", {
-        data: { id: id }
+      await axios.delete("https://food-service-app-ciba.onrender.com/food/", {
+        data: { id: id },
       });
       setEditing({});
       window.location.reload();
@@ -235,14 +247,14 @@ export default function CatFoodMenu(props) {
             </div>
             <Formik
               initialValues={{
-                foodName: editing.foodName ,
-                price: editing.price ,
-                category: editing.category ,
-                ingredients: editing.ingredients ,
-                image: editing.image ,
+                foodName: editing.foodName,
+                price: editing.price,
+                category: editing.category,
+                ingredients: editing.ingredients,
+                image: editing.image,
               }}
               validate={(values) => {
-                const errors:FormikError = {};
+                const errors: FormikError = {};
                 if (!values.foodName) {
                   errors.foodName = "Required";
                 }
@@ -260,20 +272,27 @@ export default function CatFoodMenu(props) {
                       formData
                     ));
 
-                    console.log(res)
+                  console.log(res);
 
-                  await axios.put("http://localhost:3001/food/", {
-                    id: editing._id,
-                    foodName: values.foodName,
-                    price: values.price,
-                    category: values.category,
-                    ingredients: values.ingredients,
-                    image: res ? res?.data?.secure_url : values.image,
-                  },
-                  { headers: { Authorization: `Bearer ${window.localStorage.authToken}` } });
+                  await axios.put(
+                    "https://food-service-app-ciba.onrender.com/food/",
+                    {
+                      id: editing._id,
+                      foodName: values.foodName,
+                      price: values.price,
+                      category: values.category,
+                      ingredients: values.ingredients,
+                      image: res ? res?.data?.secure_url : values.image,
+                    },
+                    {
+                      headers: {
+                        Authorization: `Bearer ${window.localStorage.authToken}`,
+                      },
+                    }
+                  );
                   window.location.reload();
                 } catch (err) {
-                  console.log(err);
+                  err.status === 403 ? router.push("login") : console.log(err);
                   toast.error("Edit failed");
                 }
               }}
@@ -408,7 +427,7 @@ export default function CatFoodMenu(props) {
             </div>
             <div className="w-[90%] m-[5%] h-[35%] flex flex-col gap-[8px]">
               <div className="flex justify-between">
-                <div className="text-red-600 font-bold text-[20px]">
+                <div className="text-red-600 font-bold text-[20px] line-clamp-1 overflow-ellipsis">
                   {el.foodName}
                 </div>
                 <div className="text-[18px]">${el.price}</div>

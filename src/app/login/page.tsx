@@ -25,7 +25,7 @@ export default function login() {
 
   const login = async () => {
     const response = await axios.post(
-      "http://localhost:3001/users/login",
+      "https://food-service-app-ciba.onrender.com/users/login",
       {
         name: emailInput,
         password: passwordInput,

@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CatFoodMenu from "./_components/CatFoodMenu";
+import { useRouter } from "next/navigation";
 
 export default function FoodMenu() {
   const [catList, setCatList] = useState([]);
   const [addCat, setAddCat] = useState(false);
   const [newCat, setNewCat] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/cat/");
+        const response = await axios.get("https://food-service-app-ciba.onrender.com/cat/");
         setCatList(response.data.cats);
       } catch (err) {
         console.log(err);
@@ -33,13 +35,14 @@ export default function FoodMenu() {
 
   const createCategory = async () => {
     try {
-      const response = await axios.post("http://localhost:3001/cat/", { catName: newCat },
+      const response = await axios.post("https://food-service-app-ciba.onrender.com/cat/", { catName: newCat },
         { headers: { Authorization: `Bearer ${window.localStorage.authToken}` } });
       setAddCat(false);
       setCatList([...catList,{catName: newCat}]);
       console.log(response);
       
     } catch (err) {
+      err.status === 403 ? router.push("login") : 
       console.log(err);
     }
   };

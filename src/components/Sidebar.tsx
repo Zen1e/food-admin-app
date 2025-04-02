@@ -22,15 +22,15 @@ export default function Sidebar(props:Props) {
       </div>
 
       <div className="mt-[100px] gap-[20px] flex flex-col">
-        <div className="flex w-full h-[45px] border pl-[25px] items-center rounded-full gap-[10px]" style={pageStatus === 1 ? {background: "#111111"} : {}} onClick={()=>setPageStatus(1)}>
+        <div className="flex w-full h-[45px] border pl-[25px] items-center rounded-full gap-[10px] cursor-pointer" style={pageStatus === 1 ? {background: "#111111"} : {}} onClick={()=>setPageStatus(1)}>
             <LayoutDashboard stroke={pageStatus === 1 ? "white" : "black"} strokeWidth={1}/>
             <div className={pageStatus === 1 ? "text-white" : "text-black"}>Food Menu</div>
         </div>
-        <div className="flex w-full h-[45px] border pl-[25px] items-center rounded-full gap-[10px]" style={pageStatus === 2 ? {background: "#111111"} : {}} onClick={()=>setPageStatus(2)}>
+        <div className="flex w-full h-[45px] border pl-[25px] items-center rounded-full gap-[10px] cursor-pointer" style={pageStatus === 2 ? {background: "#111111"} : {}} onClick={()=>setPageStatus(2)}>
             <Truck stroke={pageStatus === 2 ? "white" : "black"} strokeWidth={1}/>
             <div className={pageStatus === 2 ? "text-white" : "text-black"}>Orders</div>
         </div>
-        <div className="flex w-full h-[45px] border pl-[25px] items-center rounded-full gap-[10px]" style={pageStatus === 3 ? {background: "#111111"} : {}} onClick={()=>setPageStatus(3)}>
+        <div className="flex w-full h-[45px] border pl-[25px] items-center rounded-full gap-[10px] cursor-pointer" style={pageStatus === 3 ? {background: "#111111"} : {}} onClick={()=>setPageStatus(3)}>
             <Settings stroke={pageStatus === 3 ? "white" : "black"} strokeWidth={1}/>
             <div className={pageStatus === 3 ? "text-white" : "text-black"}>Settings</div>
         </div>
