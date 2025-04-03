@@ -12,7 +12,7 @@ import Setting from "@/features/(settings)/Setting";
 export default function Home() {
   const router = useRouter();
   
-  const [pageStatus, setPageStatus] = useState(3);
+  const [pageStatus, setPageStatus] = useState(1);
   const [currUser, setCurrUser] = useState({
     name: ""
   });
