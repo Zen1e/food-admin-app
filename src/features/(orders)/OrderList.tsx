@@ -33,7 +33,6 @@ export default function OrderList() {
           headers: { Authorization: `Bearer ${window.localStorage.authToken}` },
         });
         setOrders(response.data);
-        console.log(response.data);
       } catch (err) {
         err.status === 403
           ? router.push("login")

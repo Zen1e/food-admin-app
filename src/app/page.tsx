@@ -7,11 +7,12 @@ import OrderList from "../features/(orders)/OrderList";
 import { useRouter } from "next/navigation";
 import { DropdownMenu,DropdownMenuContent,DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import jwt from "jsonwebtoken";
+import Setting from "@/features/(settings)/Setting";
 
 export default function Home() {
   const router = useRouter();
   
-  const [pageStatus, setPageStatus] = useState(1);
+  const [pageStatus, setPageStatus] = useState(3);
   const [currUser, setCurrUser] = useState({
     name: ""
   });
@@ -47,6 +48,7 @@ export default function Home() {
       </DropdownMenu>
       {pageStatus === 1 && <FoodMenu />}
       {pageStatus === 2 && <OrderList />}
+      {pageStatus === 3 && <Setting />}
     </div>
     </div>
   );
