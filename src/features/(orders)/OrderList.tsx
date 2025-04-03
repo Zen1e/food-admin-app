@@ -129,8 +129,9 @@ export default function OrderList() {
               {/* <div className="py-[10px] px-[20px] border rounded-full">
                 Date filter
               </div> */}
-              <div
-                className="py-[10px] px-[20px] bg-black text-white rounded-full flex gap-[10px] cursor-pointer"
+              <button
+                className={`py-[10px] px-[20px] bg-black text-white rounded-full flex gap-[10px] ${selected.length === 0 ? "opacity-30 text-[#AAAAAA]" : ""}`}
+                disabled={selected.length === 0}
                 onClick={() => setShowChangeState(true)}
               >
                 <div>Change delivery state</div>
@@ -139,7 +140,7 @@ export default function OrderList() {
                     {selected.length}
                   </div>
                 )}
-              </div>
+              </button>
               {showChangeState && (
                 <div className="w-screen h-screen fixed top-0 left-0 bg-black/25 z-20 flex justify-center items-center">
                   <div className="bg-white w-[500px] h-[300px] rounded-[20px] p-[30px]">

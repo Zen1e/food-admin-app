@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -36,7 +35,7 @@ export default function login() {
     } else {
       console.log(response);
       if(response.data.role === "user"){
-        window.location.href = "http://localhost:3000/login"
+        window.location.href = "https://food-client-app.vercel.app"
       }
       else{
         localStorage.setItem("authToken", response.data.token);

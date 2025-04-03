@@ -97,12 +97,12 @@ export default function FoodMenu() {
                 {el.catName}
               </div>
             ))}
-          <div
+          <button
             className="w-[36px] h-[36px] rounded-full bg-red-500 text-white text-[22px] text-center"
             onClick={() => setAddCat(true)}
           >
             +
-          </div>
+          </button>
         </div>
       </div>
 

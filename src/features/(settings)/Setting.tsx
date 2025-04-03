@@ -34,6 +34,19 @@ export default function Setting() {
         getUsers()
     },[])
 
+    const formatDateTimeUTC8 = (dateString) => {
+      const date = new Date(dateString);
+      
+      const formattedDate = date.toISOString().split('T')[0];
+      
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const seconds = date.getSeconds().toString().padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}:${seconds}`;
+      
+      return `${formattedDate} ${formattedTime}`;
+    };
+
 
   return (
     <div className="w-[calc(100vw-205px)] bg-gray-100">
@@ -57,7 +70,7 @@ export default function Setting() {
                         <TableCell>{el.name}</TableCell>
                         <TableCell>{el.role}</TableCell>
                         <TableCell>{el.location}</TableCell>
-                        <TableCell className="whitespace-pre">{el.createdAt.split("T")[0]}      {Number(el.createdAt.split("T")[1].substring(0,2))+8}{el.createdAt.split("T")[1].substring(2,8)}</TableCell>
+                        <TableCell className="whitespace-pre">{formatDateTimeUTC8(el.createdAt)}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

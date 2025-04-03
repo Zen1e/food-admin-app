@@ -401,7 +401,7 @@ export default function CatFoodMenu(props) {
       <div className="font-bold text-[25px]">{category}</div>
       <div className="flex gap-[25px] flex-wrap">
         <div
-          className="w-[270px] h-[240px] rounded-[15px] border border-red-400 border-dashed flex flex-col gap-[20px] justify-center items-center"
+          className="w-[270px] h-[240px] rounded-[15px] border border-red-400 border-dashed flex flex-col gap-[20px] justify-center items-center cursor-pointer"
           onClick={() => setAddFood(true)}
         >
           <div className="w-[36px] h-[36px] rounded-full bg-red-500 text-white text-[22px] text-center">
